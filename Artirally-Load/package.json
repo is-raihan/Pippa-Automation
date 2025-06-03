@@ -1,0 +1,13 @@
+{
+  "name": "pippa-load-test",
+  "version": "1.0.0",
+  "description": "Load testing for PippaSync login",
+  "main": "login.js",
+  "scripts": {
+    "test": "artillery run artillery-config.yml"
+  },
+  "dependencies": {
+    "artillery": "^2.0.0-37",
+    "playwright": "^1.40.0"
+  }
+} 
