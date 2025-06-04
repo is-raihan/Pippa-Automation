@@ -1,0 +1,20 @@
+{
+  "name": "pippa-api-playwright",
+  "version": "1.0.0",
+  "description": "API Testing Suite using Playwright for Pippa Project",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "report": "playwright show-report"
+  },
+  "dependencies": {
+    "@playwright/test": "^1.42.1",
+    "dotenv": "^16.4.5",
+    "axios": "^1.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "typescript": "^5.3.3"
+  }
+} 
