@@ -1,0 +1,31 @@
+config:
+  target: "{{ $processEnvironment.BASE_URL }}"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      rampTo: 50
+      name: "Ramp up load"
+    - duration: 300
+      arrivalRate: 50
+      name: "Sustained load"
+  plugins:
+    metrics-by-endpoint: {}
+  processor: "./functions.js"
+
+scenarios:
+  - name: "API Flow"
+    flow:
+      - get:
+          url: "/api/health"
+          expect:
+            - statusCode: 200
+      - think: 2
+      - post:
+          url: "/api/login"
+          json:
+            username: "{{ $processEnvironment.TEST_USERNAME }}"
+            password: "{{ $processEnvironment.TEST_PASSWORD }}"
+          expect:
+            - statusCode: 200
+            - hasProperty: "token"
+      - think: 1 

@@ -1,0 +1,19 @@
+{
+  "name": "k6-performance-tests",
+  "version": "1.0.0",
+  "description": "Performance testing suite using K6 for Pippa project",
+  "scripts": {
+    "test:api": "k6 run scenarios/api/*.js",
+    "test:web": "k6 run scenarios/web/*.js",
+    "test:all": "k6 run scenarios/**/*.js",
+    "test:api:smoke": "k6 run scenarios/api/smoke.js",
+    "test:web:smoke": "k6 run scenarios/web/smoke.js",
+    "test:api:load": "k6 run scenarios/api/load.js",
+    "test:web:load": "k6 run scenarios/web/load.js",
+    "test:api:stress": "k6 run scenarios/api/stress.js",
+    "test:web:stress": "k6 run scenarios/web/stress.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0"
+  }
+} 

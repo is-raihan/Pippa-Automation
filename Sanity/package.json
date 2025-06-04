@@ -1,0 +1,26 @@
+{
+  "name": "sanity-tests",
+  "version": "1.0.0",
+  "description": "Sanity testing suite using Playwright and Cucumber",
+  "scripts": {
+    "test": "cucumber-js",
+    "test:parallel": "cucumber-js --parallel 2",
+    "test:report": "cucumber-js --format html:cucumber-report.html",
+    "test:tags": "cucumber-js --tags",
+    "test:smoke": "cucumber-js --tags @smoke",
+    "test:regression": "cucumber-js --tags @regression"
+  },
+  "dependencies": {
+    "@cucumber/cucumber": "^10.0.1",
+    "@playwright/test": "^1.40.0",
+    "chai": "^4.3.7",
+    "dotenv": "^16.0.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.5",
+    "@types/cucumber": "^7.0.0",
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.0"
+  }
+} 
