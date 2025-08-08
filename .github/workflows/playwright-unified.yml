@@ -1,0 +1,284 @@
+# name: Playwright Tests with Allure Report
+# on:
+#   push:
+#     branches: [main]
+#   pull_request:
+#     branches: [main]
+#   workflow_dispatch:
+#   schedule:
+#     - cron: "0 3 * * *"    # Morning (9 AM BD Time = 3 AM UTC)
+#     - cron: "45 6 * * *"   # Mid-day (12:45 PM BD Time = 6:45 AM UTC)
+#     - cron: "0 9 * * *"    # Lunch (3 PM BD Time = 9 AM UTC)
+#     - cron: "0 15 * * *"   # Dinner (9 PM BD Time = 3 PM UTC)
+#     - cron: "45 18 * * *"  # Late Night (12:45 AM BD Time = 6:45 PM UTC)
+
+# permissions:
+#   contents: write
+#   pages: write
+#   id-token: write
+#   actions: write
+
+# jobs:
+#   test:
+#     name: Playwright Tests
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 60
+
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         project: [chromium]
+#         node-version: [18]
+
+#     steps:
+#       - uses: actions/checkout@v4
+#         with:
+#           fetch-depth: 0
+
+#       - name: Set up Node.js ${{ matrix.node-version }}
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: ${{ matrix.node-version }}
+#           cache: npm
+
+#       - name: Cache Playwright browsers
+#         id: cache-playwright
+#         uses: actions/cache@v4
+#         with:
+#           path: ~/.cache/ms-playwright
+#           key: playwright-${{ matrix.project }}-${{ hashFiles('package-lock.json') }}
+#           restore-keys: playwright-${{ matrix.project }}-
+
+#       - name: Install dependencies
+#         run: npm ci
+
+#       - name: Install Playwright browsers
+#         if: steps.cache-playwright.outputs.cache-hit != 'true'
+#         run: npx playwright install --with-deps
+
+#       - name: Install Allure CommandLine
+#         run: |
+#           curl -o allure-2.22.1.tgz -OLs https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.22.1/allure-commandline-2.22.1.tgz
+#           sudo tar -zxvf allure-2.22.1.tgz -C /opt/
+#           sudo ln -s /opt/allure-2.22.1/bin/allure /usr/bin/allure
+#           allure --version
+
+#       - name: Run Playwright tests with Allure
+#         run: npm run test:with-allure
+#         env:
+#           CI: true
+#           NODE_ENV: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'prod' || 'stage' }}
+
+#       - name: Store test results
+#         if: always()
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: allure-results
+#           path: allure-results/
+#           retention-days: 30
+
+#   deploy-report:
+#     name: Deploy Allure Report
+#     needs: test
+#     runs-on: ubuntu-latest
+#     if: always()
+
+#     environment:
+#       name: github-pages
+#       url: ${{ steps.deployment.outputs.page_url }}
+
+#     steps:
+#       - uses: actions/checkout@v4
+#         with:
+#           fetch-depth: 0
+
+#       - name: Download test results
+#         uses: actions/download-artifact@v4
+#         with:
+#           name: allure-results
+#           path: allure-results
+
+#       - name: Get Allure history
+#         uses: actions/checkout@v4
+#         if: always()
+#         continue-on-error: true
+#         with:
+#           ref: gh-pages
+#           path: gh-pages
+
+#       - name: Generate Allure Report
+#         uses: simple-elf/allure-report-action@master
+#         if: always()
+#         id: allure-report
+#         with:
+#           allure_results: allure-results
+#           allure_history: allure-history
+#           keep_reports: 20
+#           github_run_num: ${{ github.run_number }}
+#           github_run_id: ${{ github.run_id }}
+#           github_repo: ${{ github.repository }}
+#           github_sha: ${{ github.sha }}
+
+#       - name: Setup Pages
+#         uses: actions/configure-pages@v4
+
+#       - name: Upload artifact
+#         uses: actions/upload-pages-artifact@v3
+#         with:
+#           path: allure-history
+
+#       - name: Deploy to GitHub Pages
+#         id: deployment
+#         uses: actions/deploy-pages@v4
+
+#       - name: Send notification
+#         if: always()
+#         uses: rtCamp/action-slack-notify@v2
+#         env:
+#           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+#           SLACK_CHANNEL: "#test-reports"
+#           SLACK_COLOR: ${{ job.status }}
+#           SLACK_MESSAGE: "Allure Report Available :rocket: ${{ steps.deployment.outputs.page_url }}"
+#           SLACK_TITLE: "Test Results"
+#           SLACK_USERNAME: "GitHub Actions"
+#           SLACK_ICON_EMOJI: ":test_tube:"
+
+
+name: Playwright Tests with Allure Report
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 * * *"    # Morning (9 AM BD Time = 3 AM UTC)
+    - cron: "45 6 * * *"   # Mid-day (12:45 PM BD Time = 6:45 AM UTC)
+    - cron: "0 9 * * *"    # Lunch (3 PM BD Time = 9 AM UTC)
+    - cron: "0 15 * * *"   # Dinner (9 PM BD Time = 3 PM UTC)
+    - cron: "45 18 * * *"  # Late Night (12:45 AM BD Time = 6:45 PM UTC previous day)
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  actions: write
+
+jobs:
+  test:
+    name: "Playwright Tests"
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [chromium]
+        node-version: [18]
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+
+      - name: Install dependencies
+        run: |
+          npm ci
+          npx playwright install --with-deps
+
+      - name: Install Allure CommandLine
+        run: |
+          curl -o allure-2.22.1.tgz -OLs https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.22.1/allure-commandline-2.22.1.tgz
+          sudo tar -zxvf allure-2.22.1.tgz -C /opt/
+          sudo ln -s /opt/allure-2.22.1/bin/allure /usr/bin/allure
+          allure --version
+
+      - name: Run Playwright tests with Allure
+        run: npm run test:with-allure
+        env:
+          CI: true
+          NODE_ENV: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'prod' || 'stage' }}
+
+      - name: Store test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: |
+            allure-results/
+            playwright-report/
+            test-results/
+          retention-days: 30
+
+  deploy-report:
+    name: "Deploy Allure Report"
+    needs: test
+    runs-on: ubuntu-latest
+    if: always()
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download test results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+
+      - name: Get Allure history
+        uses: actions/checkout@v3
+        if: always()
+        continue-on-error: true
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Generate Allure Report
+        uses: simple-elf/allure-report-action@master
+        if: always()
+        id: allure-report
+        with:
+          allure_results: allure-results
+          allure_history: allure-history
+          keep_reports: 20
+          github_run_num: ${{ github.run_number }}
+          github_run_id: ${{ github.run_id }}
+          github_repo: ${{ github.repository }}
+          github_sha: ${{ github.sha }}
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "allure-history"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Send notification
+        if: always()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: "#test-reports"
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_MESSAGE: "Allure Report Available :rocket: ${{ steps.deployment.outputs.page_url }}"
+          SLACK_TITLE: "Test Results"
+          SLACK_USERNAME: "GitHub Actions"
+          SLACK_ICON_EMOJI: ":test_tube:"
