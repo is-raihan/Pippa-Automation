@@ -1,0 +1,37 @@
+Failed to navigate to budget dashboard: page.waitForLoadState: Test timeout of 30000ms exceeded.
+    at BudgetPage.waitForLoadState (/home/k/workspace/Testing/playwright-allure-report/playwright-allure-report/pages/base.page.ts:13:21)
+    at BudgetPage.navigateToBudgetDashboard (/home/k/workspace/Testing/playwright-allure-report/playwright-allure-report/pages/budgets/budget.page.ts:20:18)
+    at /home/k/workspace/Testing/playwright-allure-report/playwright-allure-report/tests/e2e/deals/budgetFlow.spec.ts:13:5 {
+  [Symbol(step)]: {
+    stepId: 'pw:api@11',
+    location: {
+      file: '/home/k/workspace/Testing/playwright-allure-report/playwright-allure-report/pages/base.page.ts',
+      line: 13,
+      column: 21,
+      function: 'BudgetPage.waitForLoadState'
+    },
+    category: 'pw:api',
+    title: 'Wait for load state "networkidle"',
+    apiName: 'page.waitForLoadState',
+    params: { info: [Object] },
+    boxedStack: undefined,
+    steps: [],
+    attachmentIndices: [],
+    info: TestStepInfoImpl {
+      annotations: [],
+      _testInfo: [TestInfoImpl],
+      _stepId: 'pw:api@11',
+      skip: [Function (anonymous)]
+    },
+    complete: [Function: complete],
+    endWallTime: 1754220138952,
+    error: {
+      message: 'Error: page.waitForLoadState: Test timeout of 30000ms exceeded.',
+      stack: 'Error: page.waitForLoadState: Test timeout of 30000ms exceeded.\n' +
+        '    at BudgetPage.waitForLoadState (/home/k/workspace/Testing/playwright-allure-report/playwright-allure-report/pages/base.page.ts:13:21)\n' +
+        '    at BudgetPage.navigateToBudgetDashboard (/home/k/workspace/Testing/playwright-allure-report/playwright-allure-report/pages/budgets/budget.page.ts:20:18)\n' +
+        '    at /home/k/workspace/Testing/playwright-allure-report/playwright-allure-report/tests/e2e/deals/budgetFlow.spec.ts:13:5',
+      cause: undefined
+    }
+  }
+}
