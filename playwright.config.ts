@@ -34,8 +34,7 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   reporter: [
-    ['ortoni-report', reportConfig],
-    ['allure-playwright']
+    ['ortoni-report', reportConfig]
   ],
   use: {
     // baseURL: 'http://localhost:3000',
