@@ -143,7 +143,7 @@
 #           SLACK_USERNAME: "GitHub Actions"
 #           SLACK_ICON_EMOJI: ":test_tube:"
 
-
+########## Last changes ##################
 name: Playwright Tests with Allure Report
 
 on:
@@ -153,11 +153,11 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    - cron: "0 3 * * *"    # Morning (9 AM BD Time = 3 AM UTC)
-    - cron: "45 6 * * *"   # Mid-day (12:45 PM BD Time = 6:45 AM UTC)
-    - cron: "0 9 * * *"    # Lunch (3 PM BD Time = 9 AM UTC)
-    - cron: "0 15 * * *"   # Dinner (9 PM BD Time = 3 PM UTC)
-    - cron: "45 18 * * *"  # Late Night (12:45 AM BD Time = 6:45 PM UTC previous day)
+    - cron: "0 3 * * *" # Morning (9 AM BD Time = 3 AM UTC)
+    - cron: "45 6 * * *" # Mid-day (12:45 PM BD Time = 6:45 AM UTC)
+    - cron: "0 9 * * *" # Lunch (3 PM BD Time = 9 AM UTC)
+    - cron: "0 15 * * *" # Dinner (9 PM BD Time = 3 PM UTC)
+    - cron: "45 18 * * *" # Late Night (12:45 AM BD Time = 6:45 PM UTC previous day)
 
 permissions:
   contents: write

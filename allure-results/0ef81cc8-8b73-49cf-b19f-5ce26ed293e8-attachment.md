@@ -1,0 +1,72 @@
+# Page snapshot
+
+```yaml
+- link "Logo":
+  - /url: /
+  - img "Logo"
+  - img
+- navigation:
+  - link "Dashboard":
+    - /url: /
+    - img
+    - text: Dashboard
+  - link "Inventory":
+    - /url: /inventory
+    - img
+    - text: Inventory
+  - link "Listing":
+    - /url: /listing
+    - img
+    - text: Listing
+  - link "Orders":
+    - /url: /orders
+    - img
+    - text: Orders
+  - link "Templates":
+    - /url: /templates
+    - img
+    - text: Templates
+  - link "Settings":
+    - /url: /settings
+    - img
+    - text: Settings
+- navigation:
+  - link "Accounts / Billing":
+    - /url: /accounts-billing
+    - img
+    - text: Accounts / Billing
+  - link "Sign Out":
+    - /url: /
+    - img
+    - text: Sign Out
+- main:
+  - paragraph: Connect the marketplaces
+  - paragraph: To manage your stores & orders, please add the marketplaces you have stores in.
+  - paragraph: This will also allow you add marketplace specific information to the inventory items.
+  - img "Amazon Logo"
+  - paragraph: Amazon
+  - button "Connect":
+    - img
+    - text: Connect
+  - img "eBay Logo"
+  - paragraph: eBay
+  - button "Connect":
+    - img
+    - text: Connect
+  - img "Shopify Logo"
+  - paragraph: Shopify
+  - button "Connect":
+    - img
+    - text: Connect
+  - img "WooCommerce Logo"
+  - paragraph: WooCommerce
+  - button "Connect":
+    - img
+    - text: Connect
+  - img "BigCommerce Logo"
+  - paragraph: BigCommerce
+  - button "Connect":
+    - img
+    - text: Connect
+  - paragraph: You haven't added any other marketplaces yet. View full list of marketplaces to connect.
+```

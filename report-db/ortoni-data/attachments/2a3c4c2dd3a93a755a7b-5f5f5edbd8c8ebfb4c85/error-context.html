@@ -1,0 +1,102 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <title>Ortoni Error Report</title>
+      <style>
+        body { font-family: sans-serif; padding: 2rem; line-height: 1.6; max-width: 900px; margin: auto; }
+        code, pre { background: #f4f4f4; padding: 0.5rem; border-radius: 5px; display: block; overflow-x: auto; }
+        h1, h2, h3 { color: #444; }
+        hr { margin: 2em 0; }
+        #copyBtn {
+          background-color: #007acc;
+          color: white;
+          border: none;
+          padding: 0.5rem 1rem;
+          margin-bottom: 1rem;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        #copyBtn:hover {
+          background-color: #005fa3;
+        }
+      </style>
+    </head>
+    <body>
+      <button id="copyBtn">📋 Copy All</button>
+      <script>
+        document.getElementById("copyBtn").addEventListener("click", () => {
+          const content = document.getElementById("markdownContent").innerText;
+          navigator.clipboard.writeText(content).then(() => {
+            // change button text to indicate success
+            const button = document.getElementById("copyBtn");
+            button.textContent = "✅ Copied!";
+            setTimeout(() => {
+              button.textContent = "📋 Copy All"
+              }, 2000);
+          }).catch(err => {
+            console.error("Failed to copy text: ", err);
+            alert("Failed to copy text. Please try manually.");   
+          });
+        });
+      </script>
+      <div id="markdownContent">
+      <h1>Instructions</h1>
+      <ul>
+        <li>Following Playwright test failed.</li>
+        <li>Explain why, be concise, respect Playwright best practices.</li>
+        <li>Provide a snippet of code with the fix, if possible.</li>
+      </ul>
+      <h1>Error Details</h1>
+      <pre><code>Error: <span style="color:#A00">Timed out 5000ms waiting for <span style="color:var(--snippet-color)">expect(<span style="font-weight:normal;text-decoration:none;font-style:normal"><span style="color:#A00">locator<span style="color:var(--snippet-color)">).<span style="font-weight:normal;text-decoration:none;font-style:normal">toBeVisible()<span style="font-weight:normal;text-decoration:none;font-style:normal">
+
+Locator: locator(&#039;.error-message&#039;)
+Expected: visible
+Received: &lt;element(s) not found>
+Call log:
+  - Expect &quot;toBeVisible&quot; with timeout 5000ms<span style="font-weight:normal;text-decoration:none;font-style:normal">
+  - waiting for locator(&#039;.error-message&#039;)<span style="font-weight:normal;text-decoration:none;font-style:normal">
+
+    at LoginPage.verifyErrorMessage (/Users/ecomclips/Documents/eclipse-projects/Test/Pippa-Automation/pages/login/login.page.ts:53:37)
+    at /Users/ecomclips/Documents/eclipse-projects/Test/Pippa-Automation/tests/e2e/auth/signin.spec.ts:84:23</span></span></span></span></span></span></span></span></span></code></pre>
+      
+      <div>
+        <pre><code><span style="color:#555">   at <span style="color:var(--snippet-color)">../../pages/login/login.page.ts:53
+
+</span></span> <span style="color:#555"> 51 |<span style="color:var(--snippet-color)">
+ <span style="color:#555"> 52 |<span style="color:var(--snippet-color)">   <span style="color:#0AA">async<span style="color:var(--snippet-color)"> verifyErrorMessage() {
+<span style="color:#A00"><b>><span style="font-weight:normal;text-decoration:none;font-style:normal"><span style="color:var(--snippet-color)"><span style="color:#555"> 53 |<span style="color:var(--snippet-color)">     <span style="color:#0AA">await<span style="color:var(--snippet-color)"> expect(<span style="color:#0AA">this<span style="color:var(--snippet-color)"><span style="color:#A50">.<span style="color:var(--snippet-color)">errorMessage)<span style="color:#A50">.<span style="color:var(--snippet-color)">toBeVisible()<span style="color:#A50">;<span style="color:var(--snippet-color)">
+ <span style="color:#555">    |<span style="color:var(--snippet-color)">                                     <span style="color:#A00"><b>^<span style="font-weight:normal;text-decoration:none;font-style:normal"><span style="color:var(--snippet-color)">
+ <span style="color:#555"> 54 |<span style="color:var(--snippet-color)">   }
+ <span style="color:#555"> 55 |<span style="color:var(--snippet-color)"> }</span></span></span></span></span></span></b></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></b></span></span></span></span></span></span></span></code></pre>
+        <p><em>Location: ../../pages/login/login.page.ts:53:37</em></p>
+      </div>
+      <h1>Page snapshot</h1>
+<pre><code class="language-yaml">- img &quot;company-logo&quot;
+- heading &quot;Sign In&quot; [level=2]
+- paragraph: Enter your credential to get started.
+- text: Email
+- textbox &quot;e.g. olivia@email.com&quot;: wrong@email.com
+- text: Password
+- textbox &quot;Type Password&quot;: wrongpassword
+- button:
+  - img
+- button &quot;Sign In&quot;
+- link &quot;Forgot Password?&quot;:
+  - /url: /forgot-password
+- separator
+- text: or
+- separator
+- button:
+  - img
+- text: Don&#39;t have an account?
+- link &quot;Sign Up&quot;:
+  - /url: /signup
+- status: No user found with this email!
+</code></pre>
+
+      </div>
+    </body>
+    </html>
+  
