@@ -26,8 +26,7 @@
     "NPM:Install": "npm i",
     "test:dev": "cross-env NODE_ENV=dev npx playwright test --headed",
     "test:stage": "cross-env NODE_ENV=stage npx playwright test --headed",
-    "test:prod": "cross-env NODE_ENV=prod npx playwright test --headed",
-    "selectors:manage": "node scripts/manage-selectors.js"
+    "test:prod": "cross-env NODE_ENV=prod npx playwright test --headed"
   },
   "keywords": [],
   "author": "Raihan Khan",

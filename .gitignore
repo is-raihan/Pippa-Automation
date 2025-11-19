@@ -1,1 +1,14 @@
 node_modules
+/allure-results/
+/allure-report/
+/test-results/
+/report-db/
+
+# Log files
+*.log
+
+# Environment variables
+env/.env.*
+
+# macOS
+.DS_Store
